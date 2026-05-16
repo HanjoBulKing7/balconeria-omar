@@ -17,14 +17,13 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
       steps:
-            - name: Checkout your repository
-              uses: actions/checkout@v4
+        - name: Checkout your repository
+          uses: actions/checkout@v4
 
-            - name: Install, lint, and build your project
-              uses: withastro/action@v3
-              with:
-                node-version: 2
-        # Si usas npm (como parece en tu package.json), la acción lo detectará automáticamente
+        - name: Install, lint, and build your project
+          uses: withastro/action@v3
+          with:
+            node-version: 22
 
   deploy:
     needs: build
