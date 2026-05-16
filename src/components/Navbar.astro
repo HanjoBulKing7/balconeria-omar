@@ -1,0 +1,64 @@
+---
+
+---
+
+<!-- NAVBAR DESKTOP -->
+<div class='hidden md:flex h-20 w-full gap-20 items-center justify-between border-b border-amber-300 px-10 font-light tracking-wider mb-5'>
+    <div class="flex flex-row gap-5">
+        <h2 class="text-2xl text-white">Balconería</h2>
+        <h2 class="text-2xl text-yellow-400">Omar</h2>
+    </div>
+    <ul class="flex flex-row gap-5">
+        <li><a href="/services" class="hover:text-white hover:text-xl transition-all duration-300 hover:drop-shadow-[0_0_15px_rgba(250,204,21,0.8)] cursor-pointer">Servicios</a></li>
+        <li><a href="/galeria" class="hover:text-white hover:text-xl transition-all duration-300 hover:drop-shadow-[0_0_15px_rgba(250,204,21,0.8)] cursor-pointer">Galería</a></li>
+        <li><a href="" class="hover:text-white hover:text-xl transition-all duration-300 hover:drop-shadow-[0_0_15px_rgba(250,204,21,0.8)] cursor-pointer">Sobre mí</a></li>
+    </ul>
+    <button class="text-black bg-amber-200 rounded-xl text-sm cursor-grab px-4 py-2">
+        Cotizar
+    </button>
+</div>
+
+<!-- NAVBAR MÓVIL -->
+<div class="md:hidden font-light tracking-wider mb-5">
+    <!-- Barra superior -->
+    <div class="flex items-center justify-between border-b border-amber-300 px-6 h-16">
+        <div class="flex gap-2">
+            <h2 class="text-xl text-white">Balconería</h2>
+            <h2 class="text-xl text-yellow-400">Omar</h2>
+        </div>
+        <button id="menu-toggle" class="text-white">
+            <span class="material-symbols-outlined text-white" id="menu-icon">menu</span>
+        </button>
+    </div>
+    <!-- Menú desplegable -->
+    <div id="mobile-menu" class=" border-b border-amber-300">
+        <ul class="flex flex-col items-center gap-4 px-6 py-4"> 
+            <li><a href="" class="text-white">Servicios</a></li>
+            <li><a href="" class="text-white">Galería</a></li>
+            <label for=""><a href="" class="text-white">Sobre mí</a></label>
+            <li>        
+                <button class="text-black bg-amber-200 rounded-xl text-sm px-4 py-2 w-fit">
+                Cotizar
+                </button>
+            </li>
+        </ul>
+
+    </div>
+</div>
+
+<script>
+    let isOpen = false;
+    let menuIcon = 'menu'
+
+    const toggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+    const icon = document.getElementById('menu-icon');
+
+    toggle?.addEventListener('click', () => {
+        isOpen = !isOpen;
+
+        menu!.style.display = isOpen ? 'flex' : 'none';
+        menu!.style.flexDirection = 'column';
+        icon!.textContent = isOpen ? 'close' : 'menu';
+    });
+</script>

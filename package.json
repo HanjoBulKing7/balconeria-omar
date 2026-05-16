@@ -12,6 +12,14 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^6.3.3"
+    "@fontsource/dm-sans": "^5.2.8",
+    "@fontsource/playfair-display": "^5.2.8",
+    "@tailwindcss/vite": "^4.3.0",
+    "astro": "^6.3.3",
+    "astro-icon": "^1.1.5",
+    "tailwindcss": "^4.3.0"
+  },
+  "devDependencies": {
+    "@iconify-json/fa6-brands": "^1.2.6"
   }
 }

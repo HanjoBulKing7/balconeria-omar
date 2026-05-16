@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+:root {
+    /* Paleta principal */
+    --carbon: #1A1A1A;      /* fondo principal */
+    --dorado-forja: #C9A24A; /* acento / CTA */
+    --cream: #F5F0E8;       /* texto sobre oscuro */
+    --acero: #2E2E2E;       /* secciones alternas */
+    
+    /* Opcionales - Variantes */
+    --dorado-claro: #D4B06A;  /* hover de botones */
+    --carbon-claro: #2A2A2A;  /* para fondos intermedios */
+    --gris-texto: #B8B4AC;    /* textos secundarios */
+}

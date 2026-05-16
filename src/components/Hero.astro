@@ -1,0 +1,41 @@
+---
+import { Icon } from 'astro-icon/components'
+---
+
+<div class="px-10 flex flex-col items-start gap-10">
+    <div class="bg-yellow-400/25 text-xl text-yellow-300 font-light tracking-tight rounded-xl w-fit p-2 border-2 border-amber-300"> 
+        Aguascalientes - Herrería, Soldadura, Pintura
+    </div>
+
+    <h1 class="text-5xl tracking-wider">Portones y estructuras <br>de acero <span class="text-yellow-300">hechas</span><br> a la medida</h1>
+    <p>Años en el área y mutiples clientes alrededor<br> de la ciudad que respaldan mi experiencia </p>
+
+    <div class="flex flex-row gap-5 mb-10">
+        <button class="bg-yellow-500/60 rounded-sm p-3 text-black flex flex-row gap-3">
+        <Icon name="fa6-brands:whatsapp" class="w-6 h-6 text-yellow-400" />Cotizar por What's app
+        </button>
+        <button class=" bg-transparent text-yellow-300 border-2 border-amber-400 flex flex-row rounded-sm px-5 py-3">
+            Ver galería →
+        </button>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 border-t-2 md:border-t-2 border-yellow-400 w-full md:h-60 italic gap-10 py-8 md:py-0">
+        
+        <!-- Bloque 1 -->
+        <div class="flex flex-col items-center justify-center border-b-2 md:border-b-0 md:border-r-2 border-yellow-400 gap-2 pb-8 md:pb-0">
+            <h1 class="text-7xl text-yellow-400 font-extralight">+5</h1>
+            <h2 class="text-4xl font-semibold">años de oficio</h2>
+        </div>
+
+        <!-- Bloque 2 -->
+        <div class="flex flex-col items-center justify-center border-b-2 md:border-b-0 md:border-r-2 border-yellow-400 gap-2 pb-8 md:pb-0">
+            <h1 class="text-7xl text-yellow-400 font-extralight">+100</h1>
+            <h2 class="text-4xl font-semibold">trabajos entregados</h2>
+        </div>
+
+        <!-- Bloque 3 -->
+        <div class="flex flex-col items-center justify-center gap-2">
+            <h1 class="text-7xl text-yellow-400 font-extralight">100%</h1>
+            <h2 class="text-4xl font-semibold">a la medida</h2>
+        </div>
+</div>
