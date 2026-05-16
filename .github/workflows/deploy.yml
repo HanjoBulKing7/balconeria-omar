@@ -1,0 +1,41 @@
+name: Deploy to GitHub Pages
+
+on:
+  # Se ejecuta automáticamente cuando haces un push a la rama main
+  push:
+    branches: [ "main" ]
+  # Permite ejecutar este workflow manualmente desde la pestaña Actions
+  workflow_dispatch:
+
+# Cancela ejecuciones en progreso si se hace un nuevo push a la misma rama
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout your repository
+        uses: actions/checkout@v4
+
+      - name: Install, lint, and build your project
+        uses: withastro/action@v3
+        # Si usas npm (como parece en tu package.json), la acción lo detectará automáticamente
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
