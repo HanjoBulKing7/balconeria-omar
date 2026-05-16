@@ -1,12 +1,17 @@
 ---
 import Layout from "../layouts/Layout.astro"
+import ServicesGrid from "../components/ServicesGrid.astro"
 ---
 
 <Layout>
     <section>
-        <div>
-            <span class="text-yellow-400/30">Lo que fabrico</span>
-            <h1>Nuestros servivicios</h1>
+        <div class="px-10">
+            <div class="mb-10">
+                <span class="text-yellow-300 text-2xl">Lo que fabrico</span>
+                <h1 class="text-7xl">Nuestros servicios</h1>
+                <p>Fabricados a mano y a la medida de tu espacio</p>
+            </div>
+            <ServicesGrid />
         </div>
     </section>
-</Layout>D
+</Layout>
