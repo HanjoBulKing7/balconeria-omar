@@ -9,9 +9,9 @@ const baseUrl = import.meta.env.BASE_URL;
         <h2 class="text-2xl text-yellow-400">Omar</h2>
     </div>
     <ul class="flex flex-row gap-5">
-        <li><a href=`${baseUrl}services` class="hover:text-white hover:text-xl transition-all duration-300 hover:drop-shadow-[0_0_15px_rgba(250,204,21,0.8)] cursor-pointer">Servicios</a></li>
-        <li><a href=`${baseUrl}galeria` class="hover:text-white hover:text-xl transition-all duration-300 hover:drop-shadow-[0_0_15px_rgba(250,204,21,0.8)] cursor-pointer">Galería</a></li>
-        <li><a href=`${baseUrl}sobre-mi` class="hover:text-white hover:text-xl transition-all duration-300 hover:drop-shadow-[0_0_15px_rgba(250,204,21,0.8)] cursor-pointer">Sobre mí</a></li>
+        <li><a href=`${baseUrl}/services` class="hover:text-white hover:text-xl transition-all duration-300 hover:drop-shadow-[0_0_15px_rgba(250,204,21,0.8)] cursor-pointer">Servicios</a></li>
+        <li><a href=`${baseUrl}/galeria` class="hover:text-white hover:text-xl transition-all duration-300 hover:drop-shadow-[0_0_15px_rgba(250,204,21,0.8)] cursor-pointer">Galería</a></li>
+        <li><a href=`${baseUrl}/sobre-mi` class="hover:text-white hover:text-xl transition-all duration-300 hover:drop-shadow-[0_0_15px_rgba(250,204,21,0.8)] cursor-pointer">Sobre mí</a></li>
     </ul>
     <button class="text-black bg-amber-200 rounded-xl text-sm cursor-grab px-4 py-2">
         Cotizar
@@ -33,9 +33,9 @@ const baseUrl = import.meta.env.BASE_URL;
     <!-- Menú desplegable -->
     <div id="mobile-menu" class=" border-b border-amber-300">
         <ul class="flex flex-col items-center gap-4 px-6 py-4"> 
-            <li><a href="" class="text-white">Servicios</a></li>
-            <li><a href="" class="text-white">Galería</a></li>
-            <label for=""><a href="" class="text-white">Sobre mí</a></label>
+            <li><a href=`${baseUrl}/services` class="text-white">Servicios</a></li>
+            <li><a href=`${baseUrl}/galeria` class="text-white">Galería</a></li>
+            <li><a href=`${baseUrl}/sobre-mi` class="text-white">Sobre mí</a></li>
             <li>        
                 <button class="text-black bg-amber-200 rounded-xl text-sm px-4 py-2 w-fit">
                 Cotizar
