@@ -1,9 +1,162 @@
 ---
+// src/pages/galeria.astro (o donde tengas tu componente de galería)
+import { Image } from 'astro:assets';
 import Layout from "../layouts/Layout.astro"
+
+// 1. Traemos todas las imágenes de tu árbol de carpetas de forma automática
+const archivosImagenes = import.meta.glob('/src/assets/images/**/*.{jpeg,jpg,png,webp}');
+
+const trabajosCrudos = await Promise.all(
+  Object.keys(archivosImagenes).map(async (path) => {
+    const modulo: any = await archivosImagenes[path]();
+    const partesRuta = path.split('/');
+    // Extrae el nombre de la carpeta (Barandal, Escalera, Portones...)
+    const categoria = partesRuta[partesRuta.length - 2].toLowerCase();
+    const nombreArchivo = partesRuta[partesRuta.length - 1].split('.')[0];
+    
+    return {
+      src: modulo.default,
+      categoria,
+      titulo: nombreArchivo
+    };
+  })
+);
+
+// 2. Truco: Llevamos un conteo por categoría para asignarle un índice (0, 1, 2...) a cada foto
+const conteoCategorias: Record<string, number> = {};
+const trabajos = trabajosCrudos.map((trabajo) => {
+  if (conteoCategorias[trabajo.categoria] === undefined) {
+    conteoCategorias[trabajo.categoria] = 0;
+  }
+  const indexEnCategoria = conteoCategorias[trabajo.categoria];
+  conteoCategorias[trabajo.categoria]++; // Sumamos 1 para la siguiente foto de esta categoría
+  
+  return {
+    ...trabajo,
+    indexEnCategoria // Guardamos si es la foto 0, la 1, la 2, etc.
+  };
+});
+
+const categorias = [
+  { id: 'todos', nombre: 'Todos destacados' },
+  { id: 'portones', nombre: 'Portones' },
+  { id: 'puertas', nombre: 'Puertas' },
+  { id: 'escalera', nombre: 'Escaleras' },
+  { id: 'protecciones', nombre: 'Protecciones' },
+  { id: 'barandal', nombre: 'Barandales' },
+  { id: 'otros', nombre: 'Otros' },
+];
 ---
 
 <Layout>
-    <section>
-        Galeria
-    </section>
+    
+<div class="min-h-screen bg-zinc-950 text-white px-4 py-16">
+  <div class="max-w-6xl mx-auto">
+    
+    <div class="text-center mb-12">
+      <span class="text-xs text-yellow-500 uppercase tracking-widest font-bold">Trabajos Reales</span>
+      <h1 class="text-4xl font-bold mt-2 tracking-tight">Galería de Proyectos</h1>
+      <p class="text-zinc-400 mt-2 text-sm">Fotos reales de acabados instalados. Sin filtros, sin stock.</p>
+    </div>
+
+    <div class="flex flex-wrap gap-2 justify-center mb-12">
+      {categorias.map(cat => (
+        <button 
+          data-filter={cat.id} 
+          class="filter-btn px-5 py-2 rounded-full border border-zinc-800 text-sm font-medium transition-all duration-200 hover:border-yellow-500/50 hover:text-yellow-500"
+        >
+          {cat.nombre}
+        </button>
+      ))}
+    </div>
+
+    <div id="galeria-proyectos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {trabajos.map(trabajo => (
+        <div 
+          class="galeria-item transition-all duration-300 transform" 
+          data-categoria={trabajo.categoria}
+          data-index-categoria={trabajo.indexEnCategoria}
+        >
+          <a 
+            href={trabajo.src.src} 
+            data-pswp-width={trabajo.src.width} 
+            data-pswp-height={trabajo.src.height} 
+            target="_blank"
+            class="block group relative overflow-hidden rounded-xl border border-zinc-900 bg-zinc-900/30 hover:border-yellow-500/30 transition-all"
+          >
+            <div class="overflow-hidden aspect-[4/3]">
+              <Image 
+                src={trabajo.src} 
+                width={500} 
+                alt={`Trabajo de balconería: ${trabajo.titulo}`} 
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <div class="p-4 bg-zinc-900/60 backdrop-blur-sm">
+              <span class="text-xs text-yellow-500 capitalize font-semibold">{trabajo.categoria}</span>
+              <h3 class="text-base font-medium text-zinc-200 mt-0.5 truncate">{trabajo.titulo}</h3>
+            </div>
+          </a>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</div>
 </Layout>
+
+<script>
+  import PhotoSwipeLightbox from 'photoswipe/lightbox';
+  import 'photoswipe/style.css';
+
+  // Inicializar PhotoSwipe apuntando dinámicamente a lo que NO esté oculto
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: '#galeria-proyectos',
+    children: '.galeria-item:not(.hidden) a', 
+    pswpModule: () => import('photoswipe')
+  });
+  lightbox.init();
+
+  // Lógica del filtro
+  const botones = document.querySelectorAll('.filter-btn');
+  const items = document.querySelectorAll('.galeria-item') as NodeListOf<HTMLElement>;
+
+  function aplicarFiltro(filtro: string) {
+    items.forEach(item => {
+      const cat = item.getAttribute('data-categoria');
+      const idx = parseInt(item.getAttribute('data-index-categoria') || '0', 10);
+
+      if (filtro === 'todos') {
+        // En "Todos", sólo mostramos las primeras 2 fotos (index 0 y 1) de cada categoría
+        if (idx < 2) {
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+        }
+      } else {
+        // En una categoría específica, mostramos ABSOLUTAMENTE TODAS las de esa categoría
+        if (cat === filtro) {
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+        }
+      }
+    });
+  }
+
+  // Activar botón inicial "Todos"
+  document.querySelector('[data-filter="todos"]')?.classList.add('bg-yellow-500', 'text-black', 'border-yellow-500');
+  aplicarFiltro('todos');
+
+  // Escuchar clicks
+  botones.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filtro = btn.getAttribute('data-filter') || 'todos';
+
+      botones.forEach(b => b.classList.remove('bg-yellow-500', 'text-black', 'border-yellow-500'));
+      btn.classList.add('bg-yellow-500', 'text-black', 'border-yellow-500');
+
+      aplicarFiltro(filtro);
+    });
+  });
+</script>
